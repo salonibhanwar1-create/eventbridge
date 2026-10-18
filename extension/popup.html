@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>EventBridge DOM Capture</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>EventBridge</h1>
+      <p id="status">Loading saved tree…</p>
+    </header>
+
+    <section id="controls">
+      <label for="budgetSlider">Token budget: <strong id="budgetValue">200</strong></label>
+      <input
+        id="budgetSlider"
+        type="range"
+        min="10"
+        max="500"
+        step="10"
+        value="200"
+      />
+      <p class="hint">Green = kept. Gray = pruned. Changing the slider updates pruning without refreshing the page.</p>
+    </section>
+
+    <section id="stats" hidden>
+      <div><span>Total tokens</span><strong id="statTotal">0</strong></div>
+      <div><span>Kept tokens</span><strong id="statKeptTokens">0</strong></div>
+      <div><span>Kept nodes</span><strong id="statKeptCount">0</strong></div>
+      <div><span>Pruned nodes</span><strong id="statPrunedCount">0</strong></div>
+      <div><span>Over budget</span><strong id="statOver">no</strong></div>
+    </section>
+
+    <section id="actions">
+      <button id="exportBtn" type="button">Export to Clipboard</button>
+      <p id="exportStatus"></p>
+    </section>
+
+    <section id="meta" hidden></section>
+    <section id="empty" hidden>
+      No tree saved yet. Open an http or https page, then click this icon again.
+    </section>
+    <ul id="tree"></ul>
+
+    <script src="prune.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

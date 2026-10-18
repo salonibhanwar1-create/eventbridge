@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EventBridge Chat Fixture</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #eef2f6;
+        color: #1f2933;
+      }
+      main {
+        max-width: 520px;
+        margin: 24px auto;
+        background: #fff;
+        border: 1px solid #d9e2ec;
+        border-radius: 12px;
+        padding: 16px;
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 20px;
+      }
+      p {
+        margin: 0 0 16px;
+        color: #52606d;
+      }
+      #chat {
+        min-height: 180px;
+        border: 1px solid #d9e2ec;
+        border-radius: 8px;
+        padding: 12px;
+        background: #f8fafc;
+      }
+      .message {
+        margin: 0 0 10px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: #d9f2e8;
+      }
+      .message.other {
+        background: #e4ebf3;
+      }
+      button {
+        margin-top: 12px;
+        border: 0;
+        border-radius: 8px;
+        background: #0b6e4f;
+        color: #fff;
+        padding: 10px 14px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Local chat test page</h1>
+      <p>Use this with the EventBridge extension over http://, not as a file:// page.</p>
+      <div id="chat">
+        <div class="message other">Hi, this is the first sample message.</div>
+        <div class="message">Thanks, this is the second sample message.</div>
+      </div>
+      <button id="addMessage" type="button">Add message</button>
+    </main>
+    <script>
+      const chat = document.getElementById("chat");
+      const button = document.getElementById("addMessage");
+      let count = 2;
+
+      button.addEventListener("click", function () {
+        count += 1;
+        const message = document.createElement("div");
+        message.className = "message";
+        message.textContent = "New dynamic message #" + count;
+        chat.appendChild(message);
+      });
+    </script>
+  </body>
+</html>

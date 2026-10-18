@@ -1,0 +1,20 @@
+{
+  "name": "eventbridge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test",
+    "test:webhooks": "node --test test/webhook.test.js",
+    "test:processing": "node --test test/processing.test.js",
+    "test:retry": "node --test test/retry.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}

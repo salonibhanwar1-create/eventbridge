@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>EventBridge Dashboard</title>
+  <link rel="stylesheet" href="/dashboard.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section id="login-panel" class="login-card" aria-labelledby="login-title" hidden>
+      <p class="eyebrow">LOCAL EVENT OPERATIONS</p>
+      <h1 id="login-title">EventBridge</h1>
+      <p class="muted">Sign in with the dashboard access token configured on this server.</p>
+      <form id="login-form">
+        <label for="access-token">Dashboard access token</label>
+        <input id="access-token" name="token" type="password" autocomplete="current-password" required>
+        <button class="primary" type="submit">Sign in</button>
+      </form>
+      <p id="login-message" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="dashboard" hidden>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">LOCAL EVENT OPERATIONS</p>
+          <h1>EventBridge</h1>
+        </div>
+        <div class="top-actions">
+          <span class="live-note"><span class="live-dot"></span>Refreshes every 5 seconds</span>
+          <button id="logout-button" class="quiet" type="button">Sign out</button>
+        </div>
+      </header>
+
+      <section class="summary-grid" aria-label="Event status counts">
+        <article class="summary-card received"><span>Received</span><strong id="count-received">—</strong></article>
+        <article class="summary-card processing"><span>Processing</span><strong id="count-processing">—</strong></article>
+        <article class="summary-card completed"><span>Completed</span><strong id="count-completed">—</strong></article>
+        <article class="summary-card failed"><span>Failed</span><strong id="count-failed">—</strong></article>
+      </section>
+
+      <section class="workspace">
+        <article class="panel event-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Webhook events</h2>
+              <p class="muted">Event list does not include payload content.</p>
+            </div>
+            <div class="list-controls">
+              <label class="filter-label" for="status-filter">Status</label>
+              <select id="status-filter">
+                <option value="">All statuses</option>
+                <option>Received</option>
+                <option>Processing</option>
+                <option>Completed</option>
+                <option>Failed</option>
+              </select>
+              <button id="refresh-button" class="quiet" type="button">Refresh</button>
+            </div>
+          </div>
+          <p id="list-message" class="message" role="status" aria-live="polite">Loading events…</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Event ID</th><th>Status</th><th>Created</th><th>Attempts</th><th>Failure reason</th></tr>
+              </thead>
+              <tbody id="event-rows"></tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <span id="page-label" class="muted"></span>
+            <div>
+              <button id="previous-button" class="quiet" type="button" disabled>Previous</button>
+              <button id="next-button" class="quiet" type="button" disabled>Next</button>
+            </div>
+          </div>
+        </article>
+
+        <aside class="panel detail-panel" aria-labelledby="detail-title">
+          <div class="detail-heading">
+            <div>
+              <p class="eyebrow">AUTHORIZED EVENT DETAIL</p>
+              <h2 id="detail-title">Select an event</h2>
+            </div>
+            <button id="retry-button" class="danger" type="button" hidden>Retry event</button>
+          </div>
+          <p id="detail-message" class="message" role="status" aria-live="polite">Choose an event to inspect its payload.</p>
+          <dl id="event-metadata" class="metadata" hidden></dl>
+          <h3 id="payload-heading" hidden>Stored payload</h3>
+          <pre id="event-payload" class="payload" hidden></pre>
+        </aside>
+      </section>
+      <p id="global-message" class="global-message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="/dashboard.js" defer></script>
+</body>
+</html>

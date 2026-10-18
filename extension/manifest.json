@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "EventBridge DOM Capture",
+  "version": "0.3.0",
+  "description": "Captures a page's DOM as a tree, prunes it to a token budget, and visualizes the result.",
+  "permissions": ["storage", "clipboardWrite"],
+  "host_permissions": ["http://localhost:3001/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "EventBridge DOM Capture"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

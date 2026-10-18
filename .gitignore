@@ -1,0 +1,9 @@
+node_modules/
+data/
+.cursor/
+.env
+.env.*
+!.env.example
+.local-test-secrets.txt
+*.log
+*.tmp
