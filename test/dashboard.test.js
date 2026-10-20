@@ -131,6 +131,26 @@ test("dashboard login issues an HttpOnly session and event APIs require it", asy
   });
 });
 
+test("dashboard login honors forwarded HTTPS while enforcing same-origin checks", async () => {
+  await withApi(async ({ request }) => {
+    const forwardedHttps = { "x-forwarded-proto": "https", origin: "https://localhost:3000" };
+    const successfulLogin = await request("POST", "/api/dashboard/login", { token: dashboardToken }, forwardedHttps);
+    assert.equal(successfulLogin.status, 200);
+    assert.match(successfulLogin.headers["Set-Cookie"], /; Secure(?:;|$)/);
+
+    const attackerOrigin = await request("POST", "/api/dashboard/login", { token: dashboardToken }, {
+      "x-forwarded-proto": "https",
+      origin: "https://attacker.example"
+    });
+    assert.equal(attackerOrigin.status, 403);
+
+    const missingOrigin = await request("POST", "/api/dashboard/login", { token: dashboardToken }, {
+      "x-forwarded-proto": "https"
+    });
+    assert.equal(missingOrigin.status, 403);
+  });
+});
+
 test("event list supports validated status filters and never includes payloads", async () => {
   await withApi(async ({ request }) => {
     const cookie = await login(request);

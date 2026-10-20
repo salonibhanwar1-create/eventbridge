@@ -530,13 +530,21 @@ function validEventStatus(status) {
   return EVENT_STATUSES.includes(status);
 }
 
+function externalProtocol(request) {
+  const forwardedProtocol = request.headers?.["x-forwarded-proto"];
+  if (typeof forwardedProtocol === "string") {
+    const protocol = forwardedProtocol.split(",", 1)[0].trim().toLowerCase();
+    if (protocol === "http" || protocol === "https") return `${protocol}:`;
+  }
+  return request.socket?.encrypted ? "https:" : "http:";
+}
+
 function sameOriginRequest(request) {
   const origin = request.headers?.origin;
   if (typeof origin !== "string") return false;
   try {
     const parsed = new URL(origin);
-    const expectedProtocol = request.socket?.encrypted ? "https:" : "http:";
-    return parsed.host === request.headers?.host && parsed.protocol === expectedProtocol;
+    return parsed.host === request.headers?.host && parsed.protocol === externalProtocol(request);
   } catch {
     return false;
   }
@@ -606,7 +614,7 @@ function createServer(options = {}) {
   }
 
   function dashboardCookie(request, token, maxAge) {
-    const secure = request.socket?.encrypted ? "; Secure" : "";
+    const secure = externalProtocol(request) === "https:" ? "; Secure" : "";
     return `${DASHBOARD_SESSION_COOKIE}=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${secure}`;
   }
 
