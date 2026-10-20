@@ -128,6 +128,3 @@ Repository Structure
 - "Dockerfile" — Container build configuration
 - "package.json" — Dependencies and scripts
 
-License
-
-No license has been specified in this README. Add the applicable license if one has been selected.
