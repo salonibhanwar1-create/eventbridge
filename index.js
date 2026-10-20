@@ -1073,7 +1073,7 @@ function createServer(options = {}) {
 
 if (require.main === module) {
   const port = Number(process.env.PORT || DEFAULT_PORT);
-  const host = process.env.BIND_HOST || "127.0.0.1";
+  const host = process.env.BIND_HOST || "0.0.0.0";
   if (!Number.isInteger(port) || port < 0 || port > 65535) {
     console.error("PORT must be an integer from 0 to 65535.");
     process.exitCode = 1;
